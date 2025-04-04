@@ -2,25 +2,39 @@ package com.example.LojaModerna.models;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.example.LojaModerna.models.enums.SaleStatus;
+
+
+@Document(collection = "sales")
 public class Sale {
     private String id;
+
+    @DBRef
     private Product product;
+
+    @DBRef
     private User vendedor;
     private int quantidade;
     private double total;
     private double comissao;
+    private SaleStatus saleStatus;
     private LocalDateTime data;
+
 
     public Sale(){}
 
     public Sale(String id, Product product, User vendedor, int quantidade, double total, double comissao,
-            LocalDateTime data) {
+         SaleStatus saleStatus, LocalDateTime data) {
         this.id = id;
         this.product = product;
         this.vendedor = vendedor;
         this.quantidade = quantidade;
         this.total = total;
         this.comissao = comissao;
+        this.saleStatus = saleStatus;
         this.data = data;
     }
 
@@ -52,6 +66,10 @@ public class Sale {
         return data;
     }
 
+    public SaleStatus getSaleStatus(){
+        return saleStatus;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -78,6 +96,10 @@ public class Sale {
 
     public void setData(LocalDateTime data) {
         this.data = data;
+    }
+
+    public void setSaleStatus(SaleStatus saleStatus){
+        this.saleStatus = saleStatus;
     }
 
     
