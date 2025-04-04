@@ -60,15 +60,15 @@ public class ProductService {
         }
     }
 
-    public void deleteProduct(String id) throws Exception{
-        findById(id);
-        //o try catch ainda n será totalmente finalizado. Falta criar um exception personalizada!
+    public void deleteProduct(String id) {
         try {
-            this.productRepository.deleteById(id);
+            Product product = findById(id); 
+            productRepository.delete(product); 
         } catch (Exception e) {
-            throw new Exception("Não é possivel deletar sua compra ");
+            throw new RuntimeException("Não foi possível deletar o produto.");
         }
     }
+    
 
     
 

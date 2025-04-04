@@ -3,70 +3,34 @@ package com.example.LojaModerna.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.LojaModerna.models.enums.Badge;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "users")
 public class User {
-    
+
     @Id
+    @Getter
     private String id;
+
+    @Getter
     private String name;
+
+    @Getter
     private String email;
+
+    @Getter
+    @Setter
     private String password;
-    private String badgeCode;
 
-
-
-    public User(){}
-    
-    public User(String id, String name, String email, String password, String badgeCode) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.badgeCode = badgeCode;
-    }
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getBadgeCode() {
-        return badgeCode;
-    }
-    
-    public void setBadgeCode(String badgeCode) {
-        this.badgeCode = badgeCode;
-    }
-
-
-   
-
-    
+    @Getter
+    private Badge badge;  // ⬅️ era String, agora é o enum
 }
