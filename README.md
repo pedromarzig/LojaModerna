@@ -23,8 +23,7 @@ Sistema de vendas e controle de estoque para vendedores identificados por crach�
 
 - Java 17 + Spring Boot  
 - HTML5 / CSS3 / JavaScript  
-- MongoDB ou MySQL  
-- Thymeleaf (se usado)  
+- MongoDB ou MySQL   
 - Git / GitHub
 
 ---
@@ -42,7 +41,8 @@ Sistema de vendas e controle de estoque para vendedores identificados por crach�
 
 ### 🖼️ Interface
 
-*(Adicione prints ou gif do sistema rodando)*
+
+Em progresso...!
 
 ---
 
@@ -94,8 +94,7 @@ A sales and inventory control system for badge-identified sellers. It allows bar
 
 - Java 17 + Spring Boot  
 - HTML5 / CSS3 / JavaScript  
-- MongoDB or MySQL  
-- Thymeleaf (if used)  
+- MongoDB or MySQL    
 - Git / GitHub
 
 ---
@@ -113,7 +112,7 @@ A sales and inventory control system for badge-identified sellers. It allows bar
 
 ### 🖼️ Interface
 
-*(Add screenshots or gif of the system running)*
+In progress...!
 
 ---
 
