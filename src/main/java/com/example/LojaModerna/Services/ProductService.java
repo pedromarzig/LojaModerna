@@ -17,6 +17,8 @@ public class ProductService {
     private ProductRepository productRepository;
 
 
+    @Autowired
+    private SaleService saleService;
 
     public Product findById(String id){
         Optional<Product> product = this.productRepository.findById(id);
@@ -37,20 +39,24 @@ public class ProductService {
     }
 
 
-    public Product  saleProduct(String id, Product obj){
+    public Product  saleProduct(String id, Product obj, String vendedorId, int quantidade){
         Product product = this.productRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        if(product.getId().equals(obj.getId())){
-            try{
-                this.deleteProduct(id);
-                return product;
-            }catch (Exception e) {
-                 throw new RuntimeException("Erro ao realizar a venda: " + e.getMessage());
-             }
-
-        }else{
+        if (!product.getId().equals(obj.getId())) {
             throw new RuntimeException("ID do produto não corresponde.");
+        }
+
+        try {
+            
+            saleService.makeSale(id, vendedorId, quantidade);
+    
+           
+            this.deleteProduct(id);
+    
+            return product;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao realizar a venda: " + e.getMessage());
         }
     }
 
