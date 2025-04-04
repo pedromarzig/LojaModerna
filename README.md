@@ -41,7 +41,8 @@ Sistema de vendas e controle de estoque para vendedores identificados por crach�
 
 ### 🖼️ Interface
 
-*(Adicione prints ou gif do sistema rodando)*
+
+Em progresso...!
 
 ---
 
@@ -111,7 +112,7 @@ A sales and inventory control system for badge-identified sellers. It allows bar
 
 ### 🖼️ Interface
 
-*(Add screenshots or gif of the system running)*
+In progress...!
 
 ---
 
