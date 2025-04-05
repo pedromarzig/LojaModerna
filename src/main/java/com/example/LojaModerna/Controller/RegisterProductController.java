@@ -27,7 +27,7 @@ public class RegisterProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/products/{id}")
     public ResponseEntity<Product> findById(@PathVariable String id){
         Product obj = this.productService.findById(id);
         return ResponseEntity.ok().body(obj);

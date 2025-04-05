@@ -23,7 +23,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<User> findById(@PathVariable String id){
         User obj = this.userService.findById(id);
         return ResponseEntity.ok().body(obj);

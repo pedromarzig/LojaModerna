@@ -24,23 +24,18 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
-
-     @GetMapping("/{id}")
+    @GetMapping("/register/{id}")
     public ResponseEntity<User> findById(@PathVariable String id){
         User obj = this.userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-    
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Validated @RequestBody User obj) {
-       userService.create(obj.getId(), obj); 
-       URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-        .buildAndExpand(obj.getId()).toUri();
+        User createdUser = userService.create(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(createdUser.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
-
-
-
-
 }

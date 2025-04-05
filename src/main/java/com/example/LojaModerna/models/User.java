@@ -32,5 +32,8 @@ public class User {
     private String password;
 
     @Getter
-    private Badge badge;  // ⬅️ era String, agora é o enum
+    private Badge badge;  
+
+    @Getter
+    private String badgeCode; 
 }
