@@ -26,9 +26,8 @@ public class ProductService {
     }
 
     @Transactional
-    public Product createProduct(Product obj){
-        return productRepository.save(obj);
-
+    public void createProduct(Product product) {
+        productRepository.save(product); // <-- isso tem que estar aqui!
     }
 
 

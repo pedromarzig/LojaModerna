@@ -27,13 +27,13 @@ public class RegisterProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable String id){
         Product obj = this.productService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
+    @PostMapping("/registerp")
     public ResponseEntity<Void> createProduct(@Validated @RequestBody Product obj){
         this.productService.createProduct(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
