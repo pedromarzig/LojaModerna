@@ -1,6 +1,7 @@
 package com.example.LojaModerna.Services;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,11 @@ public class ProductService {
             throw new RuntimeException("Não foi possível deletar o produto.");
         }
     }
+
+    public List<Product> findAllProducts() {
+        return productRepository.findAll(); // Busca todos os produtos na coleção
+    }
+    
     
 
     

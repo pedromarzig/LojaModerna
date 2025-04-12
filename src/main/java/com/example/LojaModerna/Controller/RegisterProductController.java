@@ -1,6 +1,7 @@
 package com.example.LojaModerna.Controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,11 @@ public class RegisterProductController {
     public ResponseEntity<Void> delete(@PathVariable String id){
         this.productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+     @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> products = productService.findAllProducts();
+        return ResponseEntity.ok().body(products);
     }
 }
