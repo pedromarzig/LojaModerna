@@ -3,29 +3,264 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registro Produto</title>
+  <title>Registro de Produtos - Moderna Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --success-color: #27ae60;
+      --danger-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #34495e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: var(--light-color);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark-color);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .btn-submit {
+      grid-column: span 2;
+      background-color: var(--success-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-submit:hover {
+      background-color: #219653;
+    }
+
+    .btn-submit i {
+      font-size: 1.1rem;
+    }
+
+    #responseMsg {
+      grid-column: span 2;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    .form-footer {
+      grid-column: span 2;
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-group.full-width, .btn-submit, #responseMsg {
+        grid-column: span 1;
+      }
+      
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Cadastrar Produto</h1>
+  <div class="container">
+    <div class="form-header">
+      <h1><i class="fas fa-box-open"></i> Cadastrar Produto</h1>
+      <a href="/products" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </a>
+    </div>
 
-  <form id="productForm">
-    <label for="nameProduct">Nome do Produto:</label><br />
-    <input type="text" id="nameProduct" name="nameProduct" required><br /><br />
+    <form id="productForm">
+      <div class="form-group">
+        <label for="nameProduct"><i class="fas fa-tag"></i> Nome do Produto:</label>
+        <input type="text" id="nameProduct" name="nameProduct" placeholder="Ex: Cimento CP II 50kg" required>
+      </div>
 
-    <label for="description">Descrição:</label><br />
-    <textarea id="description" name="description" required></textarea><br /><br />
+      <div class="form-group">
+        <label for="category"><i class="fas fa-layer-group"></i> Categoria:</label>
+        <select id="category" name="category" required>
+          <option value="">Selecione uma categoria</option>
+          <option value="Cimentos">Cimentos</option>
+          <option value="Tijolos">Tijolos</option>
+          <option value="Tintas">Tintas</option>
+          <option value="Ferragens">Ferragens</option>
+          <option value="Hidráulica">Hidráulica</option>
+          <option value="Elétrica">Elétrica</option>
+          <option value="Madeiras">Madeiras</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
 
-    <label for="quantity">Quantidade:</label><br />
-    <input type="number" id="quantity" name="quantity" step="1" required><br /><br />
+      <div class="form-group">
+        <label for="quantity"><i class="fas fa-boxes"></i> Quantidade em Estoque:</label>
+        <input type="number" id="quantity" name="quantity" min="0" step="1" placeholder="Ex: 100" required>
+      </div>
 
-    <label for="price">Preço:</label><br />
-    <input type="number" id="price" name="price" step="0.01" required><br /><br />
+      <div class="form-group">
+        <label for="minStock"><i class="fas fa-exclamation-triangle"></i> Estoque Mínimo:</label>
+        <input type="number" id="minStock" name="minStock" min="1" step="1" placeholder="Ex: 10" required>
+      </div>
 
-    <button type="submit">Cadastrar</button>
-  </form>
+      <div class="form-group">
+        <label for="price"><i class="fas fa-dollar-sign"></i> Preço Unitário (R$):</label>
+        <input type="number" id="price" name="price" min="0.01" step="0.01" placeholder="Ex: 32.90" required>
+      </div>
 
-  <p id="responseMsg"></p>
+      <div class="form-group">
+        <label for="imageUrl"><i class="fas fa-image"></i> URL da Imagem (opcional):</label>
+        <input type="url" id="imageUrl" name="imageUrl" placeholder="https://exemplo.com/imagem.jpg">
+      </div>
 
-  <script src="/view/scripts/registerProduct.js"></script>
+      <div class="form-group full-width">
+        <label for="description"><i class="fas fa-align-left"></i> Descrição Detalhada:</label>
+        <textarea id="description" name="description" placeholder="Descreva as características do produto..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-save"></i> Cadastrar Produto
+      </button>
+
+      <p id="responseMsg"></p>
+
+      <div class="form-footer">
+        <p><i class="fas fa-info-circle"></i> Preencha todos os campos obrigatórios</p>
+      </div>
+    </form>
+  </div>
+
+  
 </body>
 </html>

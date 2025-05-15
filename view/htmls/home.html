@@ -1,17 +1,406 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moderna Shop</title>
+    <title>Moderna Shop - Painel do Funcionário</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Alertas */
+        .alert {
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        /* Aviso de API offline */
+        .api-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        /* Animações */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fa-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Transições para linhas da tabela */
+        tr {
+            transition: all 0.3s;
+        }
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-header {
+            padding: 0 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-header h2 i {
+            color: var(--success-color);
+        }
+        
+        .nav-menu {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.5rem;
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .nav-menu li a:hover, .nav-menu li a.active {
+            background-color: rgba(255,255,255,0.1);
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card h3 i {
+            color: var(--secondary-color);
+        }
+        
+        .card .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .card .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status.in-stock {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.low-stock {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.out-of-stock {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .edit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+            margin-left: 0.5rem;
+        }
+        
+        .add-product-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 0.5rem;
+            }
+            
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+            
+            .nav-menu li {
+                flex: 0 0 auto;
+            }
+            
+            .nav-menu li a {
+                padding: 0.5rem 1rem;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            
+            .nav-menu li a:hover, .nav-menu li a.active {
+                border-left: none;
+                border-bottom: 3px solid var(--secondary-color);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Moderna Home</h1>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-hard-hat"></i> Moderna Shop</h2>
+                <p>Painel do Funcionário</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-boxes"></i> Produtos</a></li>
+                <li><a href="#"><i class="fas fa-clipboard-list"></i> Pedidos</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Clientes</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Relatórios</a></li>
+                <li><a href="#"><i class="fas fa-truck"></i> Fornecedores</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </aside>
 
-    <h2>Lista de Produtos</h2>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Usuário">
+                    <span>João Silva</span>
+                </div>
+            </div>
+
+            <!-- Cards de Resumo -->
+            <div class="card-container">
+                <div class="card">
+                    <h3><i class="fas fa-box-open"></i> Total de Produtos</h3>
+                    <div class="value">156</div>
+                    <div class="description">+5 na última semana</div>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-shopping-cart"></i> Pedidos Hoje</h3>
+                    <div class="value">24</div>
+                    <div class="description">+3 em relação a ontem</div>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Baixo Estoque</h3>
+                    <div class="value">8</div>
+                    <div class="description">Produtos com estoque crítico</div>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-dollar-sign"></i> Vendas Mensais</h3>
+                    <div class="value">R$ 48.752</div>
+                    <div class="description">Meta: R$ 60.000</div>
+                </div>
+            </div>
+
+            <!-- Tabela de Produtos -->
+            <a href="register_product.html" class="add-product-btn"><i class="fas fa-plus"></i> Adicionar Produto</a>
+            <div class="table-container">
+                <h2><i class="fas fa-boxes"></i> Últimos Produtos Cadastrados</h2>
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Estoque</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <!-- Os produtos serão inseridos aqui via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
     
-    <ul id="product-list"></ul>
-
-    <script src="/view/scripts/home.js"></script>
 </body>
 </html>

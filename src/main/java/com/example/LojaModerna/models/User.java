@@ -1,5 +1,7 @@
 package com.example.LojaModerna.models;
 
+import java.util.Map;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -36,4 +38,8 @@ public class User {
 
     @Getter
     private String badgeCode; 
+
+    public Map<String, ?> getId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
